@@ -49,8 +49,8 @@ println("============================")
 show(sampler1)
 
 #MCMC iteration specifications
-niterations = 10
-npropbase1 = 10000
+niterations = 20
+npropbase1 = 5000
 npropbase2 = 1000
 ntunerperiod = npropbase1*niterations
 
