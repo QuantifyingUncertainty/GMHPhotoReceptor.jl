@@ -49,9 +49,10 @@ println("============================")
 show(sampler1)
 
 #MCMC iteration specifications
-niterations = 2
-npropbase = 1000
-ntunerperiod = npropbase*niterations
+niterations = 10
+npropbase1 = 10000
+npropbase2 = 1000
+ntunerperiod = npropbase1*niterations
 
 ###Create a tuner that just reports the time
 tuner1 = tuner(:monitor,ntunerperiod)
@@ -62,22 +63,22 @@ show(tuner1)
 
 println("Running a simulation with Standard MH")
 runnerpolicy0 = policy(:mh,1;initialize=:prior)
-runner0 = runner(runnerpolicy0,npropbase*niterations)
+runner0 = runner(runnerpolicy0,npropbase2*niterations)
 show(runner0)
 @time chain0 = run!(runner0,model1,sampler1,tuner1)
 smhruntime = chain0.runtime
 smhproposed = chain0.proposed
 
 println("Running a simulation with Generalized MH in 1 process")
-runnerpolicy1 = policy(:mh,npropbase;initialize=:prior)
-runner1 = runner(runnerpolicy1,niterations,npropbase)
+runnerpolicy1 = policy(:mh,npropbase2;initialize=:prior)
+runner1 = runner(runnerpolicy1,niterations,npropbase2)
 @time chain1 = run!(runner1,model1,sampler1,tuner1)
 gmhruntime = chain1.runtime
 gmhproposed = chain1.proposed
 
 NWORKERS = [1,2,4,8,12,16,24,32]
 proposalstrategy = ["total","segment"]
-nproposals = [npropbase*ones(Int,length(NWORKERS)) npropbase*max(NWORKERS,1)]
+nproposals = [npropbase1*ones(Int,length(NWORKERS)) npropbase2*max(NWORKERS,1)]
 parallelruntimes = zeros(length(NWORKERS),2)
 parallelproposed = zeros(Int,length(NWORKERS),2)
 
