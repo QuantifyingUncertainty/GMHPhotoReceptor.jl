@@ -14,6 +14,11 @@ immutable BumpShape <: GeneralizedMetropolisHastings.AbstractPolicyTrait
     BumpShape(s::Symbol) = (@assert in(s,[:fixed,:sample]) ; new(s))
 end
 
+immutable PlotMode <: GeneralizedMetropolisHastings.AbstractPolicyTrait
+    trait::Symbol
+    PlotMode(s::Symbol) = (@assert in(s,[:repl,:notebook]) ; new(s))
+end
+
 immutable FixedBumpShapeParameters{T<:AbstractFloat}
     amplitude::T
     shape::T
@@ -24,12 +29,15 @@ end
 _traitname(t::LatencyCalculation) = :latency
 _traitname(t::RefractoryCalculation) = :refractory
 _traitname(t::BumpShape) = :bump
+_traitname(t::PlotMode) = :plotmode
+
 
 _trait(::Type{Val{:latency}},t::Symbol) = LatencyCalculation(t)
 _trait(::Type{Val{:refractory}},t::Symbol) = RefractoryCalculation(t)
 _trait(::Type{Val{:bump}},t::Symbol) = BumpShape(t)
+_trait(::Type{Val{:plotmode}},t::Symbol) = PlotMode(t)
 
-paramkeys(t::GeneralizedMetropolisHastings.AbstractPolicyTrait) = tuple([symbol(_traitname(t),x) for x in _paramkeys(t)]...)
+paramkeys(t::GeneralizedMetropolisHastings.AbstractPolicyTrait) = tuple([Symbol(_traitname(t),x) for x in _paramkeys(t)]...)
 parampriors(t::GeneralizedMetropolisHastings.AbstractPolicyTrait) = _parampriors(t)
 
 function _paramkeys(t::Union{LatencyCalculation,RefractoryCalculation})

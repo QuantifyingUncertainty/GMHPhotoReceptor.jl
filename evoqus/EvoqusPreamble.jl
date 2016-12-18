@@ -1,11 +1,17 @@
+println("========================")
+println("Preparing Run for Evoqus")
+println("========================")
 #Make sure the package is installed
 try
-    Pkg.clone("git://github.com/QuantifyingUncertainty/GeneralizedMetropolisHastings.jl")
+    Pkg.clone("https://github.com/QuantifyingUncertainty/GeneralizedMetropolisHastings.jl")
 catch
     warn("Package already installed in previous run")
 end
 
-import GeneralizedMetropolisHastings
+include("/workspace/GMHPhotoReceptor.jl")
 
-#Run the script
-include("photo/evoqus/PhotoReceptor1.jl")
+import GeneralizedMetropolisHastings
+import GMHPhotoReceptor
+
+@everywhere include("/workspace/GMHPhotoReceptor.jl")
+

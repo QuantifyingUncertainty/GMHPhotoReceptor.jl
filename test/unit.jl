@@ -1,5 +1,6 @@
 unittests = [
-  "photoreceptor"]
+    "photoreceptor",
+    "analysis"]
 
 println("===================")
 println("Running unit tests:")

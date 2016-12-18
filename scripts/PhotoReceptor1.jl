@@ -128,7 +128,7 @@ ylabel("Log-Posterior")
 for i=1:nparas
     subplot(244 + i)
     bins = meanparamvals[i]-1.0:0.1:meanparamvals[i]+1.0
-    h = PyPlot.plt[:hist](sub(samples(chain1),i,:)',bins)
+    h = PyPlot.plt[:hist](vec(getindex(samples(chain1),i,:)),bins)
     grid("on")
     title("Parameter $(parameters(model1)[i].key)")
     xlabel("Values")

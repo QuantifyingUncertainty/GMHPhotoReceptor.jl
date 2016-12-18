@@ -1,6 +1,6 @@
 module GMHPhotoReceptor
 
-import Compat
+import Compat: view
 import Distributions
 import JLD
 import GeneralizedMetropolisHastings

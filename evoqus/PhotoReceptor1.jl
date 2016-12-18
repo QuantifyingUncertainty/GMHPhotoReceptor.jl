@@ -1,3 +1,5 @@
+include(joinpath(splitdir(@__FILE__())[1],"EvoqusPreamble.jl"))
+
 #Run the script
 println("==========================================================================")
 println("Beginning execution of script GMHPhotoReceptor.jl/evoqus/PhotoReceptor1.jl")
@@ -5,8 +7,8 @@ println("=======================================================================
 
 println("Number of parallel processes running: ",nprocs())
 
-using GeneralizedMetropolisHastings
-using GMHExamples
+@everywhere using GeneralizedMetropolisHastings
+@everywhere using GMHPhotoReceptor
 
 ###Print a message indicating that the GMH package has loaded correctly
 print_gmh_module_loaded()
@@ -17,12 +19,12 @@ println("================================")
 
 #Standard M-H for nproposals == 1
 #Generalized M-H for nproposals > 1
-nproposals = 10000
+nproposals = 100000
 
 #MCMC iteration specifications
-nburnin = 100
-niterations = 100
-ntunerperiod = 10
+nburnin = 0
+niterations = 20
+ntunerperiod = 5
 
 ###Values of the model
 numvilli1 = 30000
@@ -36,8 +38,9 @@ bumpamplitude = (3.0,5.0) #uniform distribution with (low,high) values
 bumpshape = (log(3.0),0.3) #lognormal distribution with (location,scale) values; variable can vary roughly between 2.0 and 4.0, but becomes increasingly penalized outside
 bumpscale = (log(2.5),0.3) #lognormal distribution with (location,scale) values; variable can vary roughly between 1.5 and 3.5, but becomes increasingly penalized outside
 
-photons1 = photonsequence("../data/naturallight.jld")
-current1 = lightinducedcurrent("../data/naturallight.jld")
+photonfilename = joinpath(splitdir(@__FILE__())[1],"../data/naturallight.jld")
+photons1 = photonsequence(photonfilename)
+current1 = lightinducedcurrent(photonfilename)
 
 modelpolicy1 = policy(:photoreceptor) #4-parameter model with stochastic lognormal latency and refractory parameters and fixed bump parameters
 params1 = parameters(:photoreceptor,modelpolicy1,latencylocation,latencyscale,refractorylocation,refractoryscale)

@@ -7,9 +7,14 @@ import Base.Test: @test,@test_approx_eq,@test_approx_eq_eps,@test_throws
     parameters,model,evaluate!,loglikelihood
 
 @everywhere import GMHPhotoReceptor:
+    PhotoReceptorModel,
     photonsequence,
     photoreceptor,numvilli,numtimesteps,numphotons,
     bump!,bump,macrocurrent!,macrocurrent,filterphotons!,filterphotons,
     lightinducedcurrent!,lightinducedcurrent,fixedbumpshape
+
+import GMHPhotoReceptorAnalysis:
+    StreamingStats,update!,streamingstats
+
 
 
