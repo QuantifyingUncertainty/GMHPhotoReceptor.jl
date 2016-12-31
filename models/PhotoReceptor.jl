@@ -60,7 +60,7 @@ function _photoreceptor{T<:Integer,I<:Integer}(::Type{Val{:row}},photons::Vector
 end
 
 @inline microvilliwithphotons{I<:Integer,M<:DenseMatrix}(r::PhotoReceptorMatrix{I,M},timepoint::Integer) = find(r.microvilli[timepoint,:])
-@inline microvilliwithphotons{I<:Integer,S<:SparseMatrixCSC}(r::PhotoReceptorMatrix{I,S},timepoint::Integer) = sub(rowvals(r.microvilli),nzrange(r.microvilli,timepoint))
+@inline microvilliwithphotons{I<:Integer,S<:SparseMatrixCSC}(r::PhotoReceptorMatrix{I,S},timepoint::Integer) = view(rowvals(r.microvilli),nzrange(r.microvilli,timepoint))
 
 ################################
 ###Photons stored in cell matrix
