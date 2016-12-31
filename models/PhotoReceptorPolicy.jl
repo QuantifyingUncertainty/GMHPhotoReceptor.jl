@@ -29,7 +29,7 @@ _trait(::Type{Val{:latency}},t::Symbol) = LatencyCalculation(t)
 _trait(::Type{Val{:refractory}},t::Symbol) = RefractoryCalculation(t)
 _trait(::Type{Val{:bump}},t::Symbol) = BumpShape(t)
 
-paramkeys(t::GeneralizedMetropolisHastings.AbstractPolicyTrait) = tuple([symbol(_traitname(t),x) for x in _paramkeys(t)]...)
+paramkeys(t::GeneralizedMetropolisHastings.AbstractPolicyTrait) = tuple([Symbol(_traitname(t),x) for x in _paramkeys(t)]...)
 parampriors(t::GeneralizedMetropolisHastings.AbstractPolicyTrait) = _parampriors(t)
 
 function _paramkeys(t::Union{LatencyCalculation,RefractoryCalculation})
