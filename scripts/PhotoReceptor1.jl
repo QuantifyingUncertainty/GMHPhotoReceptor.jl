@@ -84,7 +84,7 @@ println("==========================")
 show(tuner1)
 
 ###Create a Generalized Metropolis-Hastings runner (which will default to Standard MH when nproposals=1)
-runnerpolicy1 = policy(:mh,nproposals;initialize=:prior)
+runnerpolicy1 = policy(:mh,nproposals;model=:stochastic,initialize=:prior)
 runner1 = runner(runnerpolicy1,niterations,nproposals;numburnin = nburnin)
 println("===========================")
 println("Runner defined successfully")
